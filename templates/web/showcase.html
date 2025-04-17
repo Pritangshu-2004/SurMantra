@@ -1,0 +1,607 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Showcase - SurMantra{% endblock %}
+
+{% block content %}
+<div class="showcase-glass-bg">
+    <div class="showcase-header">
+        <h1>
+            <span class="gradient-text">🎵 SurMantra Showcase</span>
+        </h1>
+        <p class="subtitle">
+            Dive into a curated collection of my musical recordings, videos, and creative projects.<br>
+            <span class="highlight">Passion. Dedication. Artistry.</span>
+        </p>
+    </div>
+    <div class="showcase-main-grid">
+        <div class="showcase-video-section">
+            <div class="video-frame-glass">
+                <iframe id="video-player"
+                        width="100%" height="420"
+                        src="https://www.youtube.com/embed/g1aPqifTbhY"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        aria-label="Video player">
+                </iframe>
+            </div>
+            <div id="video-details" class="video-details-glass">
+                <h2 id="video-title">Bengali Classics</h2>
+                <p id="video-desc">A soulful journey through timeless Bengali melodies.</p>
+            </div>
+        </div>
+        <div class="showcase-list-section">
+            <h3 class="list-title">🎬 Select a Video</h3>
+            <ul id="video-list" class="video-list-glass" tabindex="0" aria-label="Video list">
+                <!-- Video items will be injected by JS -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Glassmorphism & Modern Styles -->
+<style>
+    body {
+        background: linear-gradient(135deg, #232526 0%, #414345 100%);
+        min-height: 100vh;
+    }
+    
+    /* Base styles remain unchanged for desktop */
+    .showcase-glass-bg {
+        max-width: 1100px;
+        margin: 120px auto 60px auto; /* Increased top margin from 80px to 120px */
+        padding: 2.5rem 2rem 2rem 2rem;
+        border-radius: 32px;
+        background: rgba(34, 40, 49, 0.65);
+        box-shadow: 0 12px 40px 0 rgba(0,0,0,0.45), 0 1.5px 8px 0 rgba(124,240,61,0.10);
+        backdrop-filter: blur(18px) saturate(1.2);
+        border: 1.5px solid rgba(124,240,61,0.12);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(40px);}
+        to { opacity: 1; transform: translateY(0);}
+    }
+    .showcase-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    .gradient-text {
+        background: linear-gradient(90deg, #7cf03d 10%, #00e6ff 90%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 2.8rem;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        text-shadow: 0 2px 24px #7cf03d44;
+    }
+    .subtitle {
+        color: #b0bec5;
+        font-size: 1.25rem;
+        margin-top: 0.7rem;
+        margin-bottom: 0.2rem;
+        line-height: 1.6;
+    }
+    .highlight {
+        color: #7cf03d;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+    .showcase-main-grid {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 2.2rem;
+        align-items: flex-start;
+    }
+    @media (max-width: 900px) {
+        .showcase-main-grid {
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+    }
+    .showcase-video-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+    .video-frame-glass {
+        border-radius: 20px;
+        overflow: hidden;
+        background: rgba(31, 36, 45, 0.85);
+        box-shadow: 0 8px 32px rgba(124, 240, 61, 0.13), 0 1.5px 8px 0 rgba(124,240,61,0.10);
+        border: 1.5px solid rgba(124,240,61,0.18);
+        transition: box-shadow 0.3s;
+    }
+    .video-frame-glass:focus-within, .video-frame-glass:hover {
+        box-shadow: 0 0 0 3px #7cf03d55, 0 8px 32px rgba(124, 240, 61, 0.18);
+    }
+    .video-details-glass {
+        background: rgba(44, 54, 63, 0.72);
+        border-radius: 16px;
+        padding: 1.1rem 1.5rem;
+        box-shadow: 0 2px 12px rgba(124, 240, 61, 0.10);
+        border: 1.2px solid rgba(124,240,61,0.10);
+        color: #e0f2f1;
+        min-height: 80px;
+        animation: fadeIn 0.8s cubic-bezier(.4,0,.2,1);
+    }
+    .video-details-glass h2 {
+        margin: 0 0 0.3rem 0;
+        font-size: 1.45rem;
+        color: #7cf03d;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .video-details-glass p {
+        margin: 0;
+        color: #b0bec5;
+        font-size: 1.08rem;
+    }
+    .showcase-list-section {
+        background: rgba(255,255,255,0.07);
+        border-radius: 20px;
+        padding: 1.2rem 1rem 1.5rem 1rem;
+        box-shadow: 0 8px 32px rgba(124, 240, 61, 0.10);
+        border: 1.5px solid rgba(124,240,61,0.08);
+        min-width: 220px;
+        max-width: 340px;
+        margin: 0 auto;
+    }
+    .list-title {
+        text-align: center;
+        font-size: 1.3rem;
+        color: #1f242d;
+        font-weight: 700;
+        margin-bottom: 1.2rem;
+        letter-spacing: 0.5px;
+        background: linear-gradient(90deg, #7cf03d 10%, #00e6ff 90%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    .video-list-glass {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.7rem;
+        max-height: 420px;
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #7cf03d #232526;
+    }
+    .video-list-glass::-webkit-scrollbar {
+        width: 8px;
+        background: #232526;
+        border-radius: 8px;
+    }
+    .video-list-glass::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #7cf03d 40%, #00e6ff 100%);
+        border-radius: 8px;
+    }
+    .video-list-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.10);
+        cursor: pointer;
+        transition: background 0.22s, box-shadow 0.22s, transform 0.18s;
+        box-shadow: 0 1.5px 8px 0 rgba(124,240,61,0.07);
+        outline: none;
+        border: none;
+        position: relative;
+        min-height: 64px;
+        animation: fadeIn 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .video-list-item:hover, .video-list-item:focus {
+        background: linear-gradient(90deg, #7cf03d33 0%, #00e6ff33 100%);
+        box-shadow: 0 0 0 2px #7cf03d55;
+        transform: translateY(-2px) scale(1.025);
+    }
+    .video-list-item.active {
+        background: linear-gradient(90deg, #7cf03d 0%, #00e6ff 100%);
+        color: #1f242d;
+        font-weight: 700;
+        box-shadow: 0 0 16px #7cf03d55;
+        transform: scale(1.03);
+    }
+    .video-thumb {
+        width: 54px;
+        height: 38px;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: 0 2px 8px #7cf03d33;
+        border: 1.5px solid #7cf03d33;
+        background: #232526;
+        flex-shrink: 0;
+    }
+    .video-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+    .video-meta-title {
+        font-size: 1.08rem;
+        font-weight: 600;
+        color: inherit;
+        margin-bottom: 2px;
+        letter-spacing: 0.2px;
+    }
+    .video-meta-desc {
+        font-size: 0.93rem;
+        color: #b0bec5;
+        opacity: 0.85;
+        line-height: 1.2;
+    }
+    /* Enhanced mobile experience */
+    @media (max-width: 700px) {
+        body {
+            max-width: 100vw;
+            overflow-x: hidden;
+        }
+        .showcase-glass-bg {
+            max-width: 100vw;
+            width: 100vw;
+            margin: 70px auto 0 auto;
+            padding: 1.2rem 0.2rem 0.7rem 0.2rem;
+            border-radius: 0;
+            background: none;
+            box-shadow: none;
+            backdrop-filter: none;
+            border: none;
+        }
+        .showcase-header {
+            width: 100vw;
+            max-width: 100vw;
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+        .gradient-text {
+            font-size: 1.45rem !important;
+            font-weight: 900;
+            letter-spacing: 1.2px;
+            margin-bottom: 0.3rem;
+            display: inline-block;
+        }
+        .subtitle {
+            font-size: 1.02rem !important;
+            margin-top: 0.3rem;
+            margin-bottom: 0.2rem;
+            line-height: 1.5;
+        }
+        .showcase-main-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            align-items: center;
+            width: 100vw;
+            max-width: 100vw;
+            margin: 0 auto;
+            padding: 0 0.1rem;
+        }
+        .showcase-video-section {
+            width: 99vw;
+            max-width: 440px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            position: sticky;
+            top: 60px;
+            z-index: 10;
+        }
+        .video-frame-glass {
+            border-radius: 1.2rem;
+            background: rgba(31, 36, 45, 0.92);
+            box-shadow: 0 8px 32px #00ffe733, 0 1.5px 8px #7cf03d33;
+            min-height: 120px;
+            max-height: 220px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-frame-glass iframe {
+            height: 210px;
+            min-height: 120px;
+            max-height: 220px;
+            border-radius: 1.2rem;
+        }
+        .video-details-glass {
+            background: rgba(44, 54, 63, 0.82);
+            border-radius: 1rem;
+            padding: 0.7rem 0.7rem;
+            box-shadow: 0 2px 12px #7cf03d22;
+            border: 1.2px solid #7cf03d22;
+            min-height: 60px;
+            margin-bottom: 0.2rem;
+        }
+        .video-details-glass h2 {
+            margin: 0 0 0.2rem 0;
+            font-size: 1.08rem;
+        }
+        .video-details-glass p {
+            font-size: 0.93rem;
+        }
+        .showcase-list-section {
+            width: 99vw;
+            max-width: 440px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.07);
+            border-radius: 1.2rem;
+            padding: 0.7rem 0.2rem 1rem 0.2rem;
+            box-shadow: 0 8px 32px #7cf03d22;
+            border: 1.5px solid #7cf03d11;
+            min-width: 0;
+        }
+        .list-title {
+            font-size: 1.01rem;
+            margin-bottom: 0.7rem;
+        }
+        .video-list-glass {
+            display: flex;
+            flex-direction: row;
+            gap: 0.7rem;
+            overflow-x: auto;
+            overflow-y: hidden;
+            max-width: 100vw;
+            padding-bottom: 0.2rem;
+            -webkit-overflow-scrolling: touch;
+            max-height: none;
+        }
+        .video-list-glass::-webkit-scrollbar {
+            height: 7px;
+            width: auto;
+        }
+        .video-list-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 120px;
+            max-width: 140px;
+            padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+            border-radius: 1rem;
+            min-height: 110px;
+            margin-bottom: 0.2rem;
+            user-select: none;
+        }
+        .video-thumb {
+            width: 90px;
+            height: 60px;
+            border-radius: 0.7rem;
+            margin-bottom: 0.2rem;
+        }
+        .video-meta {
+            align-items: center;
+            width: 100%;
+        }
+        .video-meta-title {
+            font-size: 0.97rem;
+            text-align: center;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .video-meta-desc {
+            font-size: 0.81rem;
+            text-align: center;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    
+    /* Extra small devices */
+    @media (max-width: 400px) {
+        .video-frame-glass iframe {
+            height: 180px;
+            min-height: 80px;
+        }
+        .video-thumb {
+            width: 60px;
+            height: 40px;
+        }
+        .video-list-item {
+            min-width: 100px;
+            padding: 0.5rem 0.4rem;
+        }
+    }
+</style>
+
+<!-- Modern, Accessible, and Dynamic JS -->
+<script>
+    // Video data array for easy updates and scalability
+    // Touch-friendly mobile enhancements included
+    const videos = [
+        {
+            id: "g1aPqifTbhY",
+            title: "Bengali Classics",
+            desc: "A soulful journey through timeless Bengali melodies.",
+            thumb: "https://img.youtube.com/vi/g1aPqifTbhY/hqdefault.jpg"
+        },
+        {
+            id: "8v5_l8hYwec",
+            title: "Bollywood Light",
+            desc: "A vibrant medley of Bollywood's light and playful tunes.",
+            thumb: "https://img.youtube.com/vi/8v5_l8hYwec/hqdefault.jpg"
+        },
+        {
+            id: "Xl5GuVPGOH0",
+            title: "Trendy",
+            desc: "Exploring contemporary musical trends with a unique twist.",
+            thumb: "https://img.youtube.com/vi/Xl5GuVPGOH0/hqdefault.jpg"
+        }
+        // Add more videos here as needed
+    ];
+
+    // Render video list dynamically
+    function renderVideoList() {
+        const list = document.getElementById('video-list');
+        list.innerHTML = '';
+        videos.forEach((video, idx) => {
+            const li = document.createElement('li');
+            li.className = 'video-list-item' + (idx === 0 ? ' active' : '');
+            li.setAttribute('tabindex', '0');
+            li.setAttribute('role', 'button');
+            li.setAttribute('aria-label', video.title);
+            li.dataset.idx = idx;
+
+            li.innerHTML = `
+                <img class="video-thumb" src="${video.thumb}" alt="Thumbnail for ${video.title}">
+                <div class="video-meta">
+                    <span class="video-meta-title">${video.title}</span>
+                    <span class="video-meta-desc">${video.desc}</span>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    // Update video player and details
+    function updateVideo(idx) {
+        const video = videos[idx];
+        const player = document.getElementById('video-player');
+        player.src = `https://www.youtube.com/embed/${video.id}`;
+        document.getElementById('video-title').textContent = video.title;
+        document.getElementById('video-desc').textContent = video.desc;
+
+        // Update active class
+        document.querySelectorAll('.video-list-item').forEach((li, i) => {
+            li.classList.toggle('active', i === idx);
+        });
+    }
+
+    // Keyboard and touch navigation for accessibility
+    function setupKeyboardNav() {
+        const list = document.getElementById('video-list');
+        
+        // Keyboard navigation
+        list.addEventListener('keydown', function(e) {
+            const items = Array.from(list.querySelectorAll('.video-list-item'));
+            const activeIdx = items.findIndex(li => li.classList.contains('active'));
+            
+            // Handle both vertical (desktop) and horizontal (mobile) navigation
+            if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                e.preventDefault();
+                const nextIdx = (activeIdx + 1) % items.length;
+                items[nextIdx].focus();
+                items[nextIdx].click();
+            } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                e.preventDefault();
+                const prevIdx = (activeIdx - 1 + items.length) % items.length;
+                items[prevIdx].focus();
+                items[prevIdx].click();
+            }
+        });
+        
+        // Add touch swipe detection for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        list.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        list.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swipe left - next video
+                const items = Array.from(list.querySelectorAll('.video-list-item'));
+                const activeIdx = items.findIndex(li => li.classList.contains('active'));
+                const nextIdx = (activeIdx + 1) % items.length;
+                items[nextIdx].click();
+                
+                // Scroll into view smoothly
+                items[nextIdx].scrollIntoView({behavior: 'smooth', inline: 'center'});
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swipe right - previous video
+                const items = Array.from(list.querySelectorAll('.video-list-item'));
+                const activeIdx = items.findIndex(li => li.classList.contains('active'));
+                const prevIdx = (activeIdx - 1 + items.length) % items.length;
+                items[prevIdx].click();
+                
+                // Scroll into view smoothly
+                items[prevIdx].scrollIntoView({behavior: 'smooth', inline: 'center'});
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderVideoList();
+        setupKeyboardNav();
+
+        // Click/Enter/Space to select video
+        document.getElementById('video-list').addEventListener('click', function(e) {
+            let li = e.target.closest('.video-list-item');
+            if (!li) return;
+            updateVideo(Number(li.dataset.idx));
+            
+            // On mobile, scroll the selected item into view
+            if (window.innerWidth <= 700) {
+                li.scrollIntoView({behavior: 'smooth', inline: 'center'});
+            }
+        });
+        
+        document.getElementById('video-list').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                let li = document.activeElement;
+                if (li.classList.contains('video-list-item')) {
+                    updateVideo(Number(li.dataset.idx));
+                }
+            }
+        });
+        
+        // Add smooth scrolling for mobile horizontal list
+        if ('ontouchstart' in window) {
+            const videoList = document.getElementById('video-list');
+            
+            // Highlight the item that's most visible in the scroll view
+            videoList.addEventListener('scroll', function() {
+                if (window.innerWidth > 700) return; // Only for mobile
+                
+                // Debounce the scroll event
+                clearTimeout(videoList.scrollTimer);
+                videoList.scrollTimer = setTimeout(function() {
+                    const items = Array.from(videoList.querySelectorAll('.video-list-item'));
+                    const listRect = videoList.getBoundingClientRect();
+                    const listCenter = listRect.left + listRect.width / 2;
+                    
+                    // Find the item closest to the center of the viewport
+                    let closestItem = null;
+                    let closestDistance = Infinity;
+                    
+                    items.forEach(item => {
+                        const itemRect = item.getBoundingClientRect();
+                        const itemCenter = itemRect.left + itemRect.width / 2;
+                        const distance = Math.abs(itemCenter - listCenter);
+                        
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestItem = item;
+                        }
+                    });
+                    
+                    if (closestItem && !closestItem.classList.contains('active')) {
+                        updateVideo(Number(closestItem.dataset.idx));
+                    }
+                }, 150);
+            }, {passive: true});
+        }
+    });
+</script>
+{% endblock %}

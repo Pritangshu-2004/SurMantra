@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Delete Account{% endblock %}
+{% block content %}
+<div style="max-width: 500px; margin: 3rem auto; background: #232a36; border-radius: 1.5rem; box-shadow: 0 0 24px #ff4d4f44; padding: 2.5rem 2rem; text-align: center;">
+  <h2 style="color: #ff4d4f; margin-bottom: 1.5rem;">
+    <i class="fas fa-user-slash"></i> Delete Account
+  </h2>
+  <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+    Are you sure you want to <b>delete your account</b>?<br>
+    This action is <span style="color: #ff4d4f; font-weight: bold;">permanent</span> and cannot be undone.<br>
+    All your data will be lost.
+  </p>
+  <form method="post" style="margin-bottom: 1rem;">
+    {% csrf_token %}
+    <button type="submit" style="background: #ff4d4f; color: #fff; border: none; border-radius: 2rem; padding: 0.7rem 2.2rem; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 0 16px #ff4d4f88; transition: background 0.2s;">
+      <i class="fas fa-trash"></i> Yes, Delete My Account
+    </button>
+  </form>
+  <a href="{% url 'profile' %}" style="color: #7cf03d; text-decoration: underline; font-size: 1rem;">Cancel</a>
+</div>
+{% endblock %}

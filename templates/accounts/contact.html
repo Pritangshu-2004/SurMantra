@@ -1,0 +1,402 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact Me{% endblock %}
+
+{% block content %}
+<!-- Google Fonts & FontAwesome (add to base.html if not already present) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+:root {
+  --primary: #7cf03d;
+  --primary-light: #a6ff4d;
+  --accent: #ff6f61;
+  --glass-bg: rgba(31,36,45,0.8);
+  --glass-blur: blur(18px);
+  --gradient: linear-gradient(120deg, #7cf03d 0%, #4CAF50 100%);
+  --gradient-animated: linear-gradient(270deg, #7cf03d, #4CAF50, #ff6f61, #7cf03d);
+  --text-light: #f8f9fa;
+  --text-gray: #adb5bd;
+  --border-glass: 1.5px solid rgba(124,240,61,0.18);
+  --shadow-glass: 0 8px 32px 0 rgba(31,36,45,0.37);
+  --radius: 22px;
+  --transition: 0.35s cubic-bezier(.4,2,.6,1);
+  --font-main: 'Inter', 'Poppins', Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-main);
+  background: linear-gradient(135deg, #23272f 0%, #1f242d 100%);
+  min-height: 100vh;
+  color: var(--text-light);
+  letter-spacing: 0.01em;
+}
+
+.contact-main-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1rem 3rem 1rem;
+}
+
+.contact-glass-card {
+  background: var(--glass-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-glass), 0 0 32px 0 #7cf03d33;
+  border: var(--border-glass);
+  backdrop-filter: var(--glass-blur);
+  padding: 3.5rem 2.5rem 2.5rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-10px);}
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+.contact-header h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: 0.7rem;
+  background: var(--gradient-animated);
+  background-size: 200% 200%;
+  animation: gradientMove 4s ease-in-out infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 24px #7cf03d44;
+  letter-spacing: 0.04em;
+}
+
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
+
+.contact-header p {
+  color: var(--text-gray);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+}
+
+.input-group input,
+.input-group textarea {
+  width: 100%;
+  padding: 1.2rem 1rem 1.2rem 1.1rem;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  border-radius: 12px;
+  color: var(--text-light);
+  font-size: 1.08rem;
+  font-family: var(--font-main);
+  font-weight: 500;
+  outline: none;
+  transition: background 0.3s, box-shadow 0.3s, border 0.3s;
+  box-shadow: 0 2px 12px #7cf03d11 inset;
+  border-bottom: 2.5px solid transparent;
+  resize: none;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+  background: rgba(255,255,255,0.16);
+  border-bottom: 2.5px solid var(--primary);
+  box-shadow: 0 0 10px #7cf03d88;
+}
+
+.input-group label {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 1.02rem;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+  background: rgba(31,36,45,0.92);
+  padding: 0 8px;
+  border-radius: 4px;
+  transition: all 0.3s;
+  user-select: none;
+  z-index: 2;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label,
+.input-group textarea:focus + label,
+.input-group textarea:not(:placeholder-shown) + label {
+  top: -13px;
+  left: 12px;
+  font-size: 0.85rem;
+  color: var(--primary-light);
+  background: rgba(31,36,45,0.98);
+  letter-spacing: 0.13em;
+  padding: 0 8px;
+}
+
+.contact-send-btn {
+  background: var(--gradient-animated);
+  background-size: 200% 200%;
+  color: #1f242d;
+  font-weight: 800;
+  font-size: 1.18rem;
+  border: none;
+  border-radius: 100px;
+  padding: 1.1rem 0;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 24px #7cf03d33;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  min-height: 54px;
+}
+
+.contact-send-btn i {
+  font-size: 1.3em;
+  transition: transform 0.3s;
+}
+
+.contact-send-btn:hover {
+  background: var(--gradient);
+  color: #1f242d;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 32px #7cf03d66;
+}
+
+.contact-send-btn:active {
+  transform: scale(0.98);
+}
+
+.contact-send-btn[disabled] {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.loader {
+  border: 3px solid #e0ffe0;
+  border-top: 3px solid var(--primary);
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  animation: spin 0.8s linear infinite;
+  margin-left: 0.7rem;
+  margin-right: 0.1rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+.contact-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.2rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+.contact-logo svg {
+  width: 70px;
+  height: 70px;
+  filter: drop-shadow(0 0 18px #7cf03d88);
+}
+
+/* --- RESPONSIVE SECTION --- */
+@media (max-width: 760px) {
+  .contact-main-container {
+    padding: 2.1rem 0.3rem 2rem 0.3rem;
+    min-height: 100vh;
+  }
+  .contact-glass-card {
+    padding: 2.2rem 0.5rem 1.5rem 0.5rem;
+    max-width: 99vw;
+    border-radius: 16px;
+  }
+  .contact-header h2 {
+    font-size: 1.39rem;
+  }
+  .contact-logo svg {
+    width: 38px;
+    height: 38px;
+  }
+  .contact-form {
+    gap: 1.07rem;
+  }
+  .contact-send-btn {
+    font-size: 1.04rem;
+    min-height: 46px;
+    border-radius: 60px;
+    padding: 0.87rem 0;
+  }
+  .input-group input,
+  .input-group textarea {
+    font-size: 1.01rem;
+    padding: 0.97rem 0.75rem 0.97rem 0.80rem;
+    border-radius: 9px;
+  }
+  .input-group label {
+    font-size: 0.91rem;
+    left: 14px;
+    padding: 0 5px;
+  }
+  .input-group input:focus + label,
+  .input-group input:not(:placeholder-shown) + label,
+  .input-group textarea:focus + label,
+  .input-group textarea:not(:placeholder-shown) + label {
+    top: -10px;
+    font-size: 0.78rem;
+    left: 10px;
+    padding: 0 4px;
+  }
+}
+
+@media (max-width: 420px) {
+  .contact-glass-card {
+    padding: 1rem 0.15rem 0.8rem 0.15rem;
+    border-radius: 8px;
+  }
+  .contact-header h2 {
+    font-size: 1rem;
+  }
+  .contact-logo svg {
+    width: 30px;
+    height: 30px;
+  }
+  .contact-form {
+    gap: 0.65rem;
+  }
+  .contact-send-btn {
+    font-size: 0.95rem;
+    min-height: 37px;
+    padding: 0.62rem 0;
+    border-radius: 24px;
+  }
+  .input-group input,
+  .input-group textarea {
+    font-size: 0.91rem;
+    padding: 0.62rem 0.38rem 0.62rem 0.41rem;
+    border-radius: 6px;
+  }
+  .input-group label {
+    font-size: 0.79rem;
+    left: 11px;
+    padding: 0 3px;
+  }
+  .input-group input:focus + label,
+  .input-group input:not(:placeholder-shown) + label,
+  .input-group textarea:focus + label,
+  .input-group textarea:not(:placeholder-shown) + label {
+    top: -8px;
+    font-size: 0.66rem;
+    left: 5px;
+    padding: 0 2px;
+  }
+}
+
+/* Ensure soft vertical scroll on ios */
+html, body { -webkit-overflow-scrolling: touch !important; }
+
+</style>
+
+<div class="contact-main-container">
+  <div class="contact-glass-card">
+    <div class="contact-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="#7cf03d" viewBox="0 0 24 24">
+        <path d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/>
+      </svg>
+    </div>
+    <div class="contact-header">
+      <h2>Contact Me</h2>
+      <p>Want to get in touch? Use the form below!</p>
+    </div>
+    <form id="contact-form" class="contact-form" method="post" action="mailto:pritangshupriyangshu@gmail.com" enctype="text/plain" autocomplete="off">
+      {% csrf_token %}
+      <div class="input-group">
+        <input type="text" id="name" name="name" required placeholder=" " autocomplete="off">
+        <label for="name">Name</label>
+      </div>
+      <div class="input-group">
+        <input type="email" id="email" name="email" required placeholder=" " autocomplete="off">
+        <label for="email">Email</label>
+      </div>
+      <div class="input-group">
+        <input type="text" id="address" name="address" required placeholder=" " autocomplete="off">
+        <label for="address">Address</label>
+      </div>
+      <div class="input-group">
+        <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
+        <label for="message">Message</label>
+      </div>
+      <button type="submit" class="contact-send-btn" id="send-button">
+        <span id="send-text">Send</span>
+        <i class="fas fa-paper-plane"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+const sendButton = document.getElementById('send-button');
+const contactForm = document.getElementById('contact-form');
+const sendText = document.getElementById('send-text');
+
+sendButton.addEventListener('click', function(e) {
+  // Prevent multiple submissions
+  if (sendButton.disabled) return;
+  e.preventDefault();
+
+  // Show loader
+  sendButton.disabled = true;
+  sendText.textContent = "Sending";
+  const icon = sendButton.querySelector('i');
+  icon.style.display = "none";
+
+  // Add loader spinner
+  let loader = document.createElement('span');
+  loader.className = "loader";
+  loader.setAttribute("id", "loader-spinner");
+  sendButton.appendChild(loader);
+
+  // Simulate sending delay, then submit
+  setTimeout(() => {
+    // Remove loader and submit
+    loader.remove();
+    contactForm.submit();
+  }, 1200);
+});
+</script>
+{% endblock %}

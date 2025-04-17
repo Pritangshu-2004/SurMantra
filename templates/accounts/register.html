@@ -1,0 +1,223 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <div class="register-card">
+    <h1 class="register-card-title"><i class="fas fa-user-plus"></i> Register</h1>
+    <form method="post" action="" class="register-minimal-form">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div class="reg-field">
+        <label for="{{ form.email.id_for_label }}" class="reg-label">Email</label>
+        {{ form.email.errors }}
+        {{ form.email }}
+      </div>
+
+      <div class="reg-field">
+        <label for="{{ form.username.id_for_label }}" class="reg-label">Username</label>
+        {{ form.username.errors }}
+        {{ form.username }}
+      </div>
+
+      <div class="reg-field">
+        <label for="{{ form.password1.id_for_label }}" class="reg-label">Password</label>
+        {{ form.password1.errors }}
+        {{ form.password1 }}
+      </div>
+
+      <div class="reg-field">
+        <label for="{{ form.password2.id_for_label }}" class="reg-label">Confirm Password</label>
+        {{ form.password2.errors }}
+        {{ form.password2 }}
+      </div>
+
+      <button type="submit" class="register-btn-minimal"><i class="fas fa-user-plus"></i> Register</button>
+      <p class="register-login-minimal">
+        Already have an account?
+        <a href="{% url 'login' %}">Login here</a>
+      </p>
+    </form>
+  </div>
+
+<style>
+  .register-bg-minimal {
+    min-height: 88vh;
+    background: linear-gradient(98deg, #f2f6f6 0%, #e6f3e9 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 10px 60px 10px;
+  }
+  .register-card {
+    background: rgba(31, 36, 45, 0.95);
+    border-radius: 19px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+    padding: 40px 38px 32px 38px;
+    max-width: 410px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1.3px solid #e4ece8;
+  }
+
+    .register-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 12px 40px rgba(57, 255, 20, 0.7);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+  .register-card-title {
+    text-align: center;
+    color: #4caf50;
+    font-size: 2.0rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    margin-bottom: 34px;
+    letter-spacing: 1.1px;
+  }
+  .register-card-title i {
+    margin-right: 7px;
+    color: #7fc96a;
+    font-size: 1.12em;
+  }
+  .register-minimal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
+  }
+  .reg-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .reg-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #7cf03d;
+    margin-left: 2px;
+    margin-bottom: 1px;
+    letter-spacing: 0.1px;
+  }
+  .reg-field .errorlist {
+    color: #d8214e;
+    font-size: 0.97em;
+    margin: 0 0 2px 0;
+    padding: 0;
+    list-style: none;
+    font-weight: 600;
+  }
+  .reg-field input {
+    border: 1.3px solid #b7dfc6;
+    outline: none;
+    border-radius: 9px;
+    padding: 14px 13px;
+    font-size: 1.04rem;
+    background: #f8fff9;
+    color: #222;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    transition: border 0.19s, box-shadow 0.19s, background 0.16s;
+  }
+  .reg-field input:focus {
+    border: 1.9px solid #47c683;
+    background: #f5fdf1;
+    box-shadow: 0 0 0 2px #4caf509c;
+  }
+  .register-btn-minimal {
+    width: 100%;
+    background: linear-gradient(90deg, #4caf50 15%, #44d599 94%);
+    color: #fff;
+    font-size: 1.13rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 9px;
+    padding: 12px 0 12px 0;
+    margin-top: 8px;
+    box-shadow: 0 2px 11px 0 #8dfbb722;
+    cursor: pointer;
+    transition: background 0.18s, transform 0.14s, box-shadow 0.15s;
+    letter-spacing: 1.01px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .register-btn-minimal i {
+    font-size: 1.07em;
+    color: #b8ffd8;
+    margin-right: 1.5px;
+  }
+  .register-btn-minimal:hover, .register-btn-minimal:focus {
+    background: linear-gradient(90deg, #44d599 0%, #4caf50 100%);
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 0 4px 19px 0 #60eb9178;
+  }
+  .register-login-minimal {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.99rem;
+    color: #235e3c;
+  }
+  .register-login-minimal a {
+    color: #4caf50;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 6px;
+    transition: color .18s;
+  }
+  .register-login-minimal a:hover {
+    color: #178f47;
+    text-decoration: underline;
+  }
+
+  /* Responsive design for mobile screens */
+  @media (max-width: 600px) {
+    .register-bg-minimal {
+      padding: 30px 2vw 30px 2vw;
+      min-height: 96vh;
+    }
+    .register-card {
+      border-radius: 11px;
+      padding: 17px 6vw 18px 6vw;
+      max-width: 99vw;
+      box-shadow: 0 2px 11px rgba(60,120,90,0.11);
+      width: 320px;
+    }
+    .register-card-title {
+      font-size: 1.13rem;
+      margin-bottom: 20px;
+    }
+    .reg-field input {
+      font-size: 0.98rem;
+      padding: 9px 8px;
+      border-radius: 5.5px;
+    }
+    .register-btn-minimal {
+      font-size: 1rem;
+      padding: 8.5px 0;
+      min-height: 40px;
+      border-radius: 6.4px;
+      margin-top: 4px;
+    }
+    .register-login-minimal {
+      font-size: 0.91rem;
+      margin-top: 12px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .register-card {
+      padding: 9px 1vw 8px 1vw;
+      border-radius: 5px;
+    }
+    .reg-label {
+      font-size: 0.91em;
+    }
+  }
+</style>
+{% endblock %}

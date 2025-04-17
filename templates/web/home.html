@@ -1,0 +1,619 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+SurMantra | Official Music Portfolio
+{% endblock %}
+
+{% block content %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Pacifico&family=Roboto:wght@400;700&display=swap');
+
+body {
+    background: linear-gradient(120deg, #181c24 0%, #232526 100%);
+}
+
+section.hero {
+    position: relative;
+    width: 100%;
+    min-height: 80vh;
+    padding: 5.5rem 0 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    box-sizing: border-box;
+    z-index: 1;
+    overflow: visible;
+}
+
+.hero-music-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+.hero-music-bg .note {
+    position: absolute;
+    font-size: 2.6rem;
+    color: #00ffe7;
+    opacity: 0.13;
+    animation: floatNote 7s linear infinite;
+    filter: blur(0.5px);
+    font-family: 'Pacifico', cursive, sans-serif;
+}
+.hero-music-bg .note1 { left: 12%; top: 20%; animation-delay: 0s;}
+.hero-music-bg .note2 { left: 70%; top: 10%; animation-delay: 2s;}
+.hero-music-bg .note3 { left: 40%; top: 60%; animation-delay: 4s;}
+.hero-music-bg .note4 { left: 80%; top: 50%; animation-delay: 1s;}
+.hero-music-bg .note5 { left: 25%; top: 75%; animation-delay: 3s;}
+@keyframes floatNote {
+    0% { transform: translateY(0) scale(1);}
+    50% { transform: translateY(-30px) scale(1.15);}
+    100% { transform: translateY(0) scale(1);}
+}
+
+.hero-content {
+    flex: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding-left: 7vw;
+    z-index: 2;
+    min-width: 320px;
+    margin-top: 1.5rem;
+}
+
+.hero-title {
+    font-size: 2.5rem;
+    font-family: 'Pacifico', cursive, 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2.5px;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: none;
+    text-shadow: 0 2px 16px #00ffe7a0, 0 0 2px #7cf03d80;
+    position: relative;
+    z-index: 2;
+}
+.hero-title .music-icon {
+    font-size: 2.1rem;
+    color: #00ffe7;
+    vertical-align: middle;
+    filter: drop-shadow(0 0 6px #00ffe7);
+    animation: bounceMusic 2.2s infinite;
+}
+@keyframes bounceMusic {
+    0%,100% { transform: translateY(0);}
+    50% { transform: translateY(-10px);}
+}
+
+.hero-subtitle {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #00ffe7;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.1rem;
+    text-shadow: 0 0 12px #00ffe7aa;
+    font-family: 'Montserrat', Arial, sans-serif;
+    background: linear-gradient(90deg, #00ffe7 0%, #7cf03d 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+}
+
+.hero-desc {
+    font-size: 1.13rem;
+    margin-bottom: 1.7rem;
+    line-height: 1.8;
+    color: #eaffd6;
+    text-shadow: 0 0 8px #7cf03d22;
+    letter-spacing: 0.3px;
+    font-family: 'Roboto', 'Montserrat', Arial, sans-serif;
+    max-width: 520px;
+    font-weight: 400;
+    background: rgba(31,36,45,0.55);
+    border-radius: 1rem;
+    padding: 1.1rem 1.3rem 1.1rem 1.1rem;
+    border-left: 4px solid #00ffe7;
+    border-right: 4px solid #7cf03d;
+}
+
+.hero-desc span {
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    font-size: 1.08em;
+}
+
+.hero-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    background: linear-gradient(90deg, #ffb347 0%, #7cf03d 60%, #00ffe7 100%);
+    border: none;
+    border-radius: 2.5rem;
+    box-shadow: 0 0 1.2rem #7cf03d88, 0 0 1.7rem #00ffe744;
+    font-size: 1.13rem;
+    color: #181c24;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    transition: all .28s cubic-bezier(.68,-0.55,.27,1.55);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Montserrat', 'Poppins', Arial, sans-serif;
+    text-shadow: 0 0 8px #fff8;
+}
+.hero-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 2.5rem;
+    background: linear-gradient(90deg, #00ffe7 0%, #7cf03d 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+}
+.hero-btn:hover {
+    background: transparent;
+    color: #00ffe7;
+    border: 2px solid #00ffe7;
+    box-shadow: 0 0 1.7rem #00ffe7;
+    transform: scale(1.07) translateY(-1px);
+}
+.hero-btn:hover::after {
+    opacity: 0.18;
+}
+
+.hero-social {
+    display: flex;
+    gap: 0.7rem;
+}
+.hero-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    font-size: 1.18rem;
+    color: #7cf03d;
+    background: rgba(31,36,45,0.7);
+    border: 2px solid #7cf03d;
+    box-shadow: 0 0 0.7rem #7cf03d44;
+    margin: 0;
+    transition: all .28s cubic-bezier(.68,-0.55,.27,1.55);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    text-decoration: none !important;
+}
+.hero-social a:visited,
+.hero-social a:active,
+.hero-social a:focus {
+    text-decoration: none !important;
+    outline: none;
+}
+.hero-social a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(120deg, #7cf03d 0%, #00ffe7 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: -1;
+}
+.hero-social a:hover {
+    background: linear-gradient(120deg, #7cf03d 0%, #00ffe7 100%);
+    color: #1f242d;
+    box-shadow: 0 0 1.2rem #00ffe7;
+    transform: scale(1.15) rotate(-8deg);
+    border-color: #00ffe7;
+    text-decoration: none !important;
+}
+.hero-social a:hover::before {
+    opacity: 0.18;
+}
+.hero-social a i {
+    transition: transform 0.3s cubic-bezier(.68,-0.55,.27,1.55);
+}
+.hero-social a:hover i {
+    transform: scale(1.18) rotate(10deg);
+}
+
+/* --- Hero Right: Profile Image as True 3D Model with Quotes --- */
+.hero-profile {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 320px;
+    z-index: 2;
+    padding-right: 8vw;
+    perspective: 1200px;
+}
+
+.profile-img-3d {
+    position: relative;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: visible;
+    background: linear-gradient(135deg, #232526 60%, #1f242d 100%);
+    box-shadow:
+        0 16px 48px 0 #00ffe744,
+        0 0 0px #fff0,
+        0 0 0 12px rgba(0,0,0,0.09) inset;
+    transition: box-shadow 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+    animation: float3d 7s ease-in-out infinite;
+    will-change: transform;
+}
+@keyframes float3d {
+    0%, 100% { transform: translateY(0) scale(1);}
+    50% { transform: translateY(-18px) scale(1.04);}
+}
+.profile-img-3d .img-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+        0 0 38px #00ffe733,
+        0 8px 32px 0 #0008,
+        0 0 0 18px rgba(255,255,255,0.07) inset,
+        0 0 0 32px rgba(0,255,231,0.07) inset;
+}
+.profile-img-3d .img-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow:
+        0 8px 32px 0 #000b,
+        0 -6px 24px 0 #fff4 inset,
+        0 0 0 8px rgba(255,255,255,0.10) inset,
+        0 0 0 18px rgba(0,255,231,0.06) inset,
+        0 0 0 2px #00ffe7;
+    filter:
+        contrast(1.13)
+        brightness(1.09)
+        saturate(1.12);
+    transition: transform 0.5s cubic-bezier(.68,-0.55,.27,1.55), box-shadow 0.5s;
+    z-index: 2;
+    will-change: transform;
+}
+.profile-img-3d:hover .img-inner img {
+    transform: scale(1.07) rotate(-2deg);
+    box-shadow:
+        0 16px 48px 0 #00ffe7cc,
+        0 -8px 32px 0 #fff8 inset,
+        0 0 0 12px #00ffe7cc inset,
+        0 0 0 22px #7cf03dcc inset,
+        0 0 0 2px #00ffe7;
+}
+
+/* --- Circular Shadow for 3D Floating Effect --- */
+.profile-img-3d::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -32px;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 32px;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.22) 70%, transparent 100%);
+    filter: blur(2.5px);
+    opacity: 0.92;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+.profile-img-3d.tilting::after,
+.profile-img-3d:hover::after {
+    opacity: 1;
+}
+
+/* --- Animated Quotes --- */
+.profile-img-3d .music-quote {
+    position: absolute;
+    left: 50%; top: 10%;
+    min-width: 120px;
+    max-width: 180px;
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0;
+    pointer-events: none;
+    font-family: 'Montserrat', 'Pacifico', cursive, Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 2px 10px #00ffe7a0, 0 0 2px #7cf03d80;
+    white-space: normal;
+    text-align: center;
+    transition:
+        opacity 0.5s cubic-bezier(.68,-0.55,.27,1.55),
+        transform 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    z-index: 10;
+    filter: drop-shadow(0 0 4px #00ffe7cc);
+    letter-spacing: 0.7px;
+    background: rgba(24,28,36,0.7);
+    border-radius: 0.8rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid #00ffe7;
+    box-shadow: 0 0 8px #00ffe7aa;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.profile-img-3d .music-quote.quote1 {
+    transition-delay: 0.05s;
+}
+.profile-img-3d .music-quote.quote2 {
+    transition-delay: 0.15s;
+}
+.profile-img-3d .music-quote.quote3 {
+    transition-delay: 0.25s;
+}
+
+.profile-img-3d.show-quotes .music-quote.quote1 {
+    opacity: 1;
+    transform: translate(-50%, -140%) scale(1);
+}
+.profile-img-3d.show-quotes .music-quote.quote2 {
+    opacity: 1;
+    transform: translate(-120%, -60%) scale(1);
+}
+.profile-img-3d.show-quotes .music-quote.quote3 {
+    opacity: 1;
+    transform: translate(20%, -60%) scale(1);
+}
+
+/* --- RESPONSIVE ENHANCEMENTS --- */
+@media (max-width: 1100px) {
+    .hero-content {
+        padding-left: 2vw;
+    }
+    .hero-profile {
+        padding-right: 2vw;
+    }
+}
+
+@media (max-width: 900px) {
+    section.hero {
+        flex-direction: column-reverse;
+        padding: 4.5rem 0 1.5rem 0;
+        gap: 2rem;
+        min-height: unset;
+    }
+    .hero-content {
+        padding-left: 0;
+        align-items: center;
+        text-align: center;
+        min-width: 0;
+        margin-top: 0.5rem;
+    }
+    .hero-profile {
+        padding-right: 0;
+        margin-bottom: 1.5rem;
+        justify-content: center;
+        min-width: 0;
+    }
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-desc {
+        font-size: 0.98rem;
+        padding: 0.8rem 0.7rem 0.8rem 0.7rem;
+    }
+    .profile-img-3d {
+        width: 200px;
+        height: 200px;
+    }
+    .profile-img-3d .music-quote {
+        font-size: 0.62rem;
+        min-width: 70px;
+        max-width: 110px;
+        padding: 0.18rem 0.35rem;
+    }
+    .profile-img-3d::after {
+        width: 70px;
+        height: 18px;
+        bottom: -18px;
+    }
+    .hero-cta-row {
+        flex-direction: column;
+        gap: 0.7rem;
+        align-items: center;
+        margin-top: 1.1rem;
+    }
+    .hero-btn {
+        width: 90vw;
+        max-width: 320px;
+        font-size: 1.05rem;
+        padding: 0.8rem 0;
+    }
+    .hero-social {
+        gap: 0.5rem;
+    }
+    .hero-social a {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    html, body {
+        font-size: 15px;
+        overflow-x: hidden;
+    }
+    section.hero {
+        padding: 2.2rem 0 0.7rem 0;
+        gap: 1.2rem;
+    }
+    .hero-content {
+        margin-top: 0.2rem;
+    }
+    .profile-img-3d {
+        width: 110px;
+        height: 110px;
+    }
+    .hero-title {
+        font-size: 1.2rem;
+        gap: 0.3rem;
+    }
+    .hero-title .music-icon {
+        font-size: 1.1rem;
+    }
+    .hero-desc {
+        font-size: 0.82rem;
+        padding: 0.5rem 0.3rem 0.5rem 0.3rem;
+    }
+    .hero-subtitle {
+        font-size: 0.92rem;
+    }
+    .profile-img-3d .music-quote {
+        font-size: 0.48rem;
+        min-width: 40px;
+        max-width: 70px;
+        padding: 0.09rem 0.18rem;
+    }
+    .profile-img-3d::after {
+        width: 32px;
+        height: 8px;
+        bottom: -8px;
+    }
+    .hero-cta-row {
+        gap: 0.5rem;
+        margin-top: 0.7rem;
+    }
+    .hero-btn {
+        width: 96vw;
+        max-width: 99vw;
+        font-size: 0.98rem;
+        padding: 0.7rem 0;
+    }
+    .hero-social {
+        gap: 0.3rem;
+    }
+    .hero-social a {
+        width: 1.6rem;
+        height: 1.6rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Prevent horizontal scroll on all screens */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+</style>
+
+<section class="hero">
+    <div class="hero-music-bg">
+        <span class="note note1">&#119070;</span>
+        <span class="note note2">&#119071;</span>
+        <span class="note note3">&#119070;</span>
+        <span class="note note4">&#9835;</span>
+        <span class="note note5">&#119071;</span>
+    </div>
+    <div class="hero-content">
+        <div class="hero-title">
+            <span>Welcome folks!</span>
+            <span class="music-icon">&#119070;</span>
+        </div>
+        <div class="hero-subtitle">SurMantra – Musical Portfolio</div>
+        <div class="hero-desc">
+            <span style="color:#00ffe7;font-weight:600;">Hi!  I am Pritangshu,</span><br>
+            Each note tells a story, capturing the essence of musical expression, devotion, and the timeless beauty of sound.<br>
+            <span style="color:#7cf03d;font-weight:600;">Explore a curated showcase</span> of my recordings, videos, and projects that reflect my dedication and passion for music. Here the project goes.
+        </div>
+        <div class="hero-cta-row">
+            <a href="{% url 'about' %}" class="hero-btn">Discover More</a>
+            <div class="hero-social">
+                <a href="https://www.youtube.com/@musicmylifepritangshu770" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://wa.me/918910515569" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/karmakar_pritangshu/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="hero-profile">
+        <div class="profile-img-3d" id="profile3d">
+            <div class="img-inner">
+                <img src="{% static 'images/body-logo1.png' %}" alt="profile image">
+            </div>
+            <!-- Animated Quotes -->
+            <div class="music-quote quote1">"Music is the shorthand of emotion."</div>
+            <div class="music-quote quote2">"Where words fail, music speaks."</div>
+            <div class="music-quote quote3">"Life is a song, love is the music."</div>
+        </div>
+    </div>
+</section>
+<script>
+/* 3D tilt effect for profile image + show quotes on hover/tap */
+/* Disable tilt on touch devices for better UX */
+const profile3d = document.getElementById('profile3d');
+function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0));
+}
+if (profile3d) {
+    if (!isTouchDevice()) {
+        profile3d.addEventListener('mousemove', function(e) {
+            const rect = profile3d.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * 12; // max 12deg
+            const rotateY = ((x - centerX) / centerX) * -12;
+            profile3d.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+            profile3d.classList.add('tilting');
+        });
+        profile3d.addEventListener('mouseleave', function() {
+            profile3d.style.transform = '';
+            profile3d.classList.remove('tilting');
+            profile3d.classList.remove('show-quotes');
+        });
+        profile3d.addEventListener('mouseenter', function() {
+            profile3d.classList.add('tilting');
+            profile3d.classList.add('show-quotes');
+        });
+    } else {
+        // On touch, just show quotes on tap
+        profile3d.addEventListener('touchstart', function() {
+            profile3d.classList.add('show-quotes');
+        });
+        profile3d.addEventListener('touchend', function() {
+            setTimeout(() => profile3d.classList.remove('show-quotes'), 1200);
+        });
+    }
+}
+</script>
+{% endblock %}

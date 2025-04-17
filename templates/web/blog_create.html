@@ -1,0 +1,292 @@
+
+{% extends "base.html" %}
+{% block title %}Create Blog Post{% endblock %}
+{% block content %}
+<style>
+  html, body {
+    min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  body {
+    background: linear-gradient(120deg, #232a36 0%, #1f242d 100%);
+  }
+
+  /* BACKLIGHT accent under card for extra delight */
+  .blog-create-backlight {
+    position: absolute;
+    left: 50%;
+    top: 68px;
+    transform: translateX(-50%);
+    width: 410px;
+    max-width: 90vw;
+    height: 80px;
+    background: linear-gradient(95deg, #00ffe7 5%, #7cf03d 70%, transparent 100%);
+    filter: blur(28px) brightness(1.5);
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.67;
+    border-radius: 99px;
+    animation: swipeLight 2.5s cubic-bezier(.4,1,.7,1) infinite alternate;
+  }
+  @keyframes swipeLight {
+    0% { left: 46%; width: 340px; opacity: 0.57;}
+    70% { left: 52%; width: 480px; opacity: 0.85;}
+    100% { left: 48%; width: 410px;}
+  }
+
+  .glass-form-container {
+    max-width: 700px;
+    margin: 110px auto 80px auto;
+    background: rgba(31, 36, 45, 0.96);
+    border-radius: 2.2rem;
+    box-shadow: 0 8px 40px #00ffe733, 0 2px 8px #7cf03d33;
+    padding: 3.2rem 3rem 2.5rem 3rem;
+    backdrop-filter: blur(14px);
+    animation: fadeInUp 0.7s cubic-bezier(0.4,0,0.2,1);
+    transition: box-shadow 0.22s;
+    position: relative;
+    z-index: 2;
+    will-change: box-shadow, transform;
+  }
+  @media (max-width: 900px) {
+    .glass-form-container {
+      max-width: 97vw;
+      padding: 2.2rem 1.1rem 1.3rem 1.1rem;
+    }
+    .blog-create-backlight {
+      height: 60px;
+      max-width: 97vw;
+      filter: blur(18px) brightness(1.2);
+    }
+  }
+  @media (max-width: 560px) {
+    .glass-form-container {
+      padding: 2.1rem 4vw 1.1rem 4vw;
+      border-radius: 1.1rem;
+      margin: 56px auto 22px auto;
+    }
+    .blog-create-backlight {
+      top: 38px;
+      height: 40px;
+    }
+  }
+  @media (max-width: 400px) {
+    .glass-form-container { padding: 1.2rem 2vw 0.3rem 2vw; }
+    .blog-create-backlight { top: 14px; height: 26px; }
+  }
+
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(44px);}
+    100% { opacity: 1; transform: translateY(0);}
+  }
+
+  .glass-form-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    background: linear-gradient(90deg, #7cf03d 0%, #00ffe7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    text-shadow: 0 0 6px #00ffe777;
+    user-select: none;
+    line-height: 1.16;
+  }
+  @media (max-width: 500px) {
+    .glass-form-title { font-size: 1.25rem; margin-bottom: 0.7rem; }
+  }
+
+  .glass-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+  }
+  .glass-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.24rem;
+    margin-bottom: 0.1rem;
+  }
+  .glass-form-group label {
+    font-weight: 600;
+    color: #a6ff4d;
+    font-size: 1.02rem;
+    margin-bottom: 0.08rem;
+    letter-spacing: 0.38px;
+  }
+  .glass-form-group input[type="text"],
+  .glass-form-group textarea,
+  .glass-form-group select,
+  .glass-form-group input[type="file"] {
+    width: 100%;
+    padding: 1.0rem 1rem;
+    border-radius: 1.1rem;
+    border: none;
+    background: rgba(36, 44, 56, 0.98);
+    color: #fff;
+    font-size: 1.05rem;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 12px #00ffe71a;
+    outline: none;
+    transition: box-shadow 0.19s, background 0.19s;
+    resize: none;
+  }
+  .glass-form-group input[type="text"]:focus,
+  .glass-form-group textarea:focus,
+  .glass-form-group select:focus {
+    background: rgba(36, 44, 56, 1);
+    box-shadow: 0 0 0 2px #00ffe7cc, 0 2px 8px #7cf03d22;
+  }
+  .glass-form-group textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+  .glass-form-group .helptext {
+    font-size: 0.93rem;
+    color: #7cf03d;
+    margin-top: 0.1rem;
+    font-style: italic;
+  }
+  .glass-form-group .errorlist {
+    color: #ff4d4f;
+    font-size: 1.01rem;
+    margin: 0.1rem 0 0.2rem 0.1rem;
+    list-style: disc inside;
+  }
+  .glass-form-btn-row {
+    display: flex;
+    gap: 1.1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  .glass-form-btn {
+    padding: 0.75rem 2.0rem;
+    background: linear-gradient(90deg, #00ffe7 0%, #7cf03d 100%);
+    color: #1f242d;
+    font-weight: 700;
+    border: none;
+    border-radius: 2rem;
+    font-size: 1.09rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 2px 14px #00ffe744;
+    transition: background 0.19s, box-shadow 0.19s, transform 0.13s;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    outline: none;
+  }
+  .glass-form-btn:hover,
+  .glass-form-btn:focus {
+    background: linear-gradient(90deg, #7cf03d 0%, #00ffe7 100%);
+    color: #1f242d;
+    box-shadow: 0 4px 21px #00ffe755, 0 0 7px #7cf03d33;
+    transform: scale(1.06) translateY(-2px);
+  }
+  .glass-cancel-link {
+    display: block;
+    margin-top: 1.1rem;
+    text-align: center;
+    color: #7cf03d;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    font-size: 1.01rem;
+    transition: color 0.16s, text-shadow 0.24s;
+    filter: drop-shadow(0 1.5px 6px #7cf03d40);
+  }
+  .glass-cancel-link:hover, .glass-cancel-link:focus {
+    color: #00ffe7;
+    text-shadow: 0 2px 12px #00ffe799;
+  }
+  .glass-error-list {
+    background: #ff4d4f22;
+    color: #ff4d4f;
+    border-radius: 0.8rem;
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 1.1rem;
+    font-size: 1.05rem;
+    list-style: disc inside;
+    box-shadow: 0 2px 8px #ff4d4f22;
+  }
+
+  /* Touch-boost for all inputs/buttons on mobile */
+  @media (max-width: 560px) {
+    .glass-form-group input[type="text"],
+    .glass-form-group textarea,
+    .glass-form-group select,
+    .glass-form-group input[type="file"],
+    .glass-form-btn {
+      font-size: 1rem;
+      padding: 0.8rem 0.7rem;
+      border-radius: 0.93rem;
+      line-height: 1.4;
+      min-height: 40px;
+    }
+    .glass-form-group textarea { min-height: 82px;}
+  }
+  @media (max-width: 400px) {
+    .glass-form-group input[type="text"],
+    .glass-form-group textarea,
+    .glass-form-group select,
+    .glass-form-group input[type="file"] {
+      font-size: 0.99rem;
+      border-radius: 0.6rem;
+      min-height: 32px;
+    }
+    .glass-form-btn { font-size: 0.97em; border-radius: 1.2rem; }
+    .glass-form-group textarea { min-height: 47px;}
+  }
+</style>
+
+<div style="position:relative; min-height:32px;">
+  <div class="blog-create-backlight"></div>
+  <div class="glass-form-container">
+    <div class="glass-form-title">
+      <i class="fas fa-edit"></i> Create New Blog Post
+    </div>
+    {% if form.errors %}
+      <ul class="glass-error-list">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" class="glass-form">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="glass-form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <span class="helptext">{{ field.help_text }}</span>
+          {% endif %}
+          {% if field.errors %}
+            <ul class="errorlist">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <div class="glass-form-btn-row">
+        <button type="submit" class="glass-form-btn"><i class="fas fa-plus"></i> Create Post</button>
+      </div>
+    </form>
+    <a href="{% url 'blog' %}" class="glass-cancel-link"><i class="fas fa-arrow-left"></i> Cancel</a>
+  </div>
+</div>
+{% endblock %}

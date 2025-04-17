@@ -1,0 +1,446 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+About SurMantra
+{% endblock %}
+
+{% block content %}
+<div class="about-glass-bg">
+    <div class="about-header">
+        <h1 class="gradient-text">About SurMantra</h1>
+        <p class="about-lead">
+            SurMantra is a musical journey led by <span class="highlight">Pritangshu Karmakar</span>, dedicated to capturing the essence of musical expression, devotion, and the timeless beauty of sound.
+        </p>
+        <p class="about-lead">
+            This platform showcases recordings, videos, and projects that reflect a deep passion for music and artistic creativity.
+        </p>
+        <p class="about-lead">
+            Explore the blog page to learn more about the recent trends in music, the artist, and upcoming projects.
+        </p>
+    </div>
+
+    <section class="skills-section">
+        <h2 class="section-title">✨ Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card tilt-card" tabindex="0">
+                <div class="skill-icon"><span>🎤</span></div>
+                <h3>Professional Vocalist</h3>
+                <p>Captivating audiences with a powerful voice & performances, I specialize in a diverse range of genres.</p>
+            </div>
+            <div class="skill-card tilt-card" tabindex="0">
+                <div class="skill-icon"><span>🎶</span></div>
+                <h3>Vocal Coach</h3>
+                <p>I empower aspiring singers to find their unique voice and enhance their vocal technique.</p>
+            </div>
+            <div class="skill-card tilt-card" tabindex="0">
+                <div class="skill-icon"><span>🎧</span></div>
+                <h3>Music Production</h3>
+                <p>Expertise in creating and producing high-quality music tracks.</p>
+            </div>
+            <div class="skill-card tilt-card" tabindex="0">
+                <div class="skill-icon"><span>🎚️</span></div>
+                <h3>Audio Engineering</h3>
+                <p>Proficient in mixing and mastering audio for a polished sound.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="visualizer-section">
+        <h2 class="section-title">🌈 Music Visualizer</h2>
+        <div class="visualizer-glass">
+            <canvas id="visualizer"></canvas>
+            <div class="button-container">
+                <button id="play-button" class="btn-play">▶ Play Music</button>
+                <button id="stop-button" class="btn-stop">■ Stop Music</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+body {
+    background: linear-gradient(135deg, #232526 0%, #414345 100%);
+    min-height: 100vh;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+.about-glass-bg {
+    max-width: 950px;
+    margin: 120px auto 80px auto;
+    padding: 2.8rem 2rem 2.5rem 2rem;
+    border-radius: 32px;
+    background: rgba(34, 40, 49, 0.68);
+    box-shadow: 0 12px 40px 0 rgba(0,0,0,0.45), 0 1.5px 8px 0 rgba(124,240,61,0.10);
+    backdrop-filter: blur(18px) saturate(1.2);
+    border: 1.5px solid rgba(124,240,61,0.12);
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1.2s cubic-bezier(.4,0,.2,1);
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(40px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+.about-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+.gradient-text {
+    background: linear-gradient(90deg, #7cf03d 10%, #00e6ff 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 24px #7cf03d44;
+    margin-bottom: 0.5rem;
+}
+.about-lead {
+    color: #b0bec5;
+    font-size: 1.18rem;
+    margin: 0.7rem 0;
+    line-height: 1.7;
+}
+.highlight {
+    color: #7cf03d;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.section-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #7cf03d;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 12px #7cf03d33;
+}
+.skills-section {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-items: center;
+    align-items: stretch;
+}
+@media (max-width: 1100px) {
+    .about-glass-bg {
+        max-width: 98vw;
+        padding: 2rem 1rem 2rem 1rem;
+    }
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+}
+@media (max-width: 900px) {
+    .about-glass-bg {
+        margin: 100px auto 40px auto;
+        padding: 1.5rem 0.7rem 1.5rem 0.7rem;
+    }
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+    .gradient-text {
+        font-size: 2rem;
+    }
+    .about-lead {
+        font-size: 1.05rem;
+    }
+    .section-title {
+        font-size: 1.15rem;
+    }
+}
+@media (max-width: 600px) {
+    .about-glass-bg {
+        padding: 1.1rem 0.2rem 1.1rem 0.2rem;
+        margin: 70px auto 18px auto;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px 0 rgba(0,0,0,0.28), 0 1.5px 8px 0 rgba(124,240,61,0.10);
+    }
+    .about-header {
+        margin-bottom: 1.2rem;
+    }
+    .gradient-text {
+        font-size: 1.18rem;
+        margin-bottom: 0.2rem;
+    }
+    .about-lead {
+        font-size: 0.93rem;
+        margin: 0.4rem 0;
+    }
+    .section-title {
+        font-size: 0.98rem;
+        margin-bottom: 1rem;
+    }
+    .skills-section {
+        margin-top: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+    }
+    .skill-card.tilt-card {
+        min-width: 0;
+        min-height: 140px;
+        padding: 1.1rem 0.5rem 1rem 0.5rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+    }
+    .skill-card .skill-icon {
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
+    }
+    .skill-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+    }
+    .skill-card p {
+        font-size: 0.88rem;
+    }
+    .visualizer-section {
+        margin-top: 1.2rem;
+    }
+    .visualizer-glass {
+        padding: 1rem 0.2rem 0.7rem 0.2rem;
+        border-radius: 10px;
+        max-width: 99vw;
+    }
+    canvas {
+        min-height: 90px;
+        max-height: 120px;
+        border-radius: 7px;
+        margin-bottom: 0.7rem;
+    }
+    .button-container {
+        gap: 0.5rem;
+    }
+    .btn-play, .btn-stop {
+        padding: 8px 12px;
+        font-size: 0.93rem;
+        border-radius: 5px;
+    }
+}
+
+/* --- Stylish Gradient Skill Cards with Tilt --- */
+.skill-card.tilt-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    min-width: 170px;
+    min-height: 240px;
+    padding: 2.2rem 1.2rem 1.5rem 1.2rem;
+    margin: 0;
+    background: linear-gradient(135deg, #00e6ff 0%, #7cf03d 100%);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(0, 255, 255, 0.10), 0 1.5px 8px 0 rgba(124,240,61,0.10);
+    border: 2.5px solid transparent;
+    transition: 
+        transform 0.35s cubic-bezier(.4,0,.2,1), 
+        box-shadow 0.35s cubic-bezier(.4,0,.2,1), 
+        border 0.25s,
+        background 0.4s;
+    z-index: 1;
+    cursor: pointer;
+    outline: none;
+    will-change: transform;
+    box-shadow: 0 0 0 0 #00e6ff, 0 8px 32px #7cf03d55;
+}
+.skill-card.tilt-card:focus,
+.skill-card.tilt-card:hover {
+    background: linear-gradient(120deg, #ffb347 0%, #e74c3c 100%);
+    color: #fff;
+    border: 2.5px solid #fff;
+    box-shadow: 0 0 32px 0 #00e6ff88, 0 8px 32px #e74c3c88;
+    transform: perspective(700px) rotateY(12deg) rotateX(6deg) scale(1.06);
+}
+.skill-card.tilt-card:focus-visible {
+    outline: 2.5px solid #00e6ff;
+    outline-offset: 2px;
+}
+.skill-card .skill-icon {
+    font-size: 2.7rem;
+    margin-bottom: 1.1rem;
+    filter: drop-shadow(0 2px 8px #00e6ff88);
+    z-index: 2;
+    position: relative;
+    animation: popIn 0.7s cubic-bezier(.4,0,.2,1);
+}
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.7);}
+    to { opacity: 1; transform: scale(1);}
+}
+.skill-card h3 {
+    margin-bottom: 0.7rem;
+    font-size: 1.18rem;
+    color: #fff;
+    text-shadow: 0 0 5px #00e6ff99;
+    z-index: 2;
+    position: relative;
+}
+.skill-card p {
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #e0f2f1;
+    opacity: 0.95;
+    z-index: 2;
+    position: relative;
+}
+.visualizer-section {
+    margin-top: 2.5rem;
+}
+.visualizer-glass {
+    margin: 0 auto;
+    background: rgba(31, 36, 45, 0.85);
+    border-radius: 18px;
+    padding: 2rem 1.2rem 1.5rem 1.2rem;
+    box-shadow: 0 4px 18px rgba(124, 240, 61, 0.10);
+    border: 1.5px solid rgba(124,240,61,0.10);
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+canvas {
+    width: 100% !important;
+    min-height: 160px;
+    max-height: 220px;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #232526 0%, #414345 100%);
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 12px #7cf03d22;
+}
+.button-container {
+    display: flex;
+    gap: 1.2rem;
+    justify-content: center;
+    width: 100%;
+}
+.btn-play, .btn-stop {
+    padding: 12px 28px;
+    border: none;
+    border-radius: 7px;
+    font-size: 1.08rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px #7cf03d33;
+    outline: none;
+}
+.btn-play {
+    background: linear-gradient(90deg, #7cf03d 60%, #00e6ff 100%);
+    color: #1f242d;
+}
+.btn-play:hover, .btn-play:focus {
+    background: linear-gradient(90deg, #a0f07a 60%, #00e6ff 100%);
+    color: #0f1a0d;
+}
+.btn-stop {
+    background: linear-gradient(90deg, #e74c3c 60%, #ffb347 100%);
+    color: #fff;
+}
+.btn-stop:hover, .btn-stop:focus {
+    background: linear-gradient(90deg, #ff6f61 60%, #ffb347 100%);
+    color: #fff;
+}
+/* Prevent horizontal scroll on all screens */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+</style>
+
+<script>
+    // Responsive canvas sizing
+    function resizeCanvas() {
+        const canvas = document.getElementById('visualizer');
+        if (!canvas) return;
+        // On mobile, use smaller height
+        if (window.innerWidth <= 600) {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 100;
+        } else {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = 200;
+        }
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Music Visualizer Script
+    const canvas = document.getElementById('visualizer');
+    const ctx = canvas.getContext('2d');
+    resizeCanvas();
+
+    const audio = new Audio("{% static 'sound/ShapeOfyou.mp3' %}");
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const analyser = audioContext.createAnalyser();
+    const source = audioContext.createMediaElementSource(audio);
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+    analyser.fftSize = 256;
+
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+
+    let animationId = null;
+
+    function draw() {
+        animationId = requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Glassy background
+        ctx.fillStyle = 'rgba(31, 36, 45, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const barWidth = (canvas.width / bufferLength) * 2.5;
+        let barHeight;
+        let x = 0;
+
+        for (let i = 0; i < bufferLength; i++) {
+            barHeight = dataArray[i];
+            // Gradient color for bars
+            const grad = ctx.createLinearGradient(0, canvas.height - barHeight / 2, 0, canvas.height);
+            grad.addColorStop(0, '#7cf03d');
+            grad.addColorStop(1, '#00e6ff');
+            ctx.fillStyle = grad;
+            ctx.shadowColor = '#7cf03d';
+            ctx.shadowBlur = 10;
+            ctx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+            x += barWidth + 1;
+        }
+        ctx.shadowBlur = 0;
+    }
+
+    document.getElementById('play-button').addEventListener('click', async () => {
+        if (audioContext.state === 'suspended') {
+            await audioContext.resume();
+        }
+        audio.play();
+        if (!animationId) draw();
+    });
+
+    document.getElementById('stop-button').addEventListener('click', () => {
+        audio.pause();
+        audio.currentTime = 0;
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = 'rgba(31, 36, 45, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    });
+
+    // Initial fill
+    ctx.fillStyle = 'rgba(31, 36, 45, 0.85)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+</script>
+{% endblock %}

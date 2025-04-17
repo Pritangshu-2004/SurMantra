@@ -1,0 +1,233 @@
+
+{% extends "base.html" %}
+{% block title %}Edit Blog{% endblock %}
+{% block content %}
+<style>
+  .edit-blog-container {
+    max-width: 540px;
+    margin: 3rem auto 2rem auto;
+    background: rgba(31, 36, 45, 0.85);
+    border-radius: 2.2rem;
+    box-shadow: 0 8px 40px #00ffe733, 0 2px 8px #7cf03d33;
+    padding: 2.5rem 2.2rem 2rem 2.2rem;
+    backdrop-filter: blur(12px);
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 0.8s cubic-bezier(0.4,0,0.2,1);
+    will-change: box-shadow, transform;
+  }
+  @keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(40px);}
+    100% { opacity: 1; transform: translateY(0);}
+  }
+  .edit-blog-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #7cf03d 0%, #00ffe7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.2rem;
+    text-align: center;
+    text-shadow: 0 0 8px #00ffe755;
+    user-select: none;
+    line-height: 1.17;
+  }
+  .edit-blog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+  }
+  .edit-blog-form label {
+    font-weight: 600;
+    color: #a6ff4d;
+    margin-bottom: 0.3rem;
+    letter-spacing: 1px;
+    font-size: 1.01rem;
+  }
+  .edit-blog-form input[type="text"],
+  .edit-blog-form textarea,
+  .edit-blog-form select {
+    width: 100%;
+    padding: 0.85rem 1.1rem;
+    border-radius: 1.1rem;
+    border: none;
+    background: rgba(36, 44, 56, 0.92);
+    color: #fff;
+    font-size: 1.07rem;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.2rem;
+    box-shadow: 0 2px 12px #00ffe71a;
+    outline: none;
+    transition: box-shadow 0.2s, background 0.2s;
+    resize: none;
+  }
+  .edit-blog-form input[type="text"]:focus,
+  .edit-blog-form textarea:focus,
+  .edit-blog-form select:focus {
+    background: rgba(36, 44, 56, 1);
+    box-shadow: 0 0 0 2px #00ffe7cc, 0 2px 12px #7cf03d33;
+  }
+  .edit-blog-form textarea {
+    min-height: 140px;
+    resize: vertical;
+  }
+  .edit-btn-row {
+    display: flex;
+    gap: 1.1rem;
+    justify-content: flex-end;
+    margin-top: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .edit-post-btn,
+  .cancel-btn {
+    padding: 0.7rem 2.1rem;
+    border-radius: 2rem;
+    font-size: 1.09rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    min-width: 120px;
+    min-height: 44px;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s, transform 0.18s;
+  }
+  .edit-post-btn {
+    background: linear-gradient(90deg, #00ffe7 0%, #7cf03d 100%);
+    color: #1f242d;
+    font-weight: 800;
+    border: none;
+    box-shadow: 0 2px 16px #00ffe744, 0 0 0 #7cf03d;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .edit-post-btn:hover, .edit-post-btn:focus {
+    background: linear-gradient(90deg, #7cf03d 0%, #00ffe7 100%);
+    color: #1f242d;
+    box-shadow: 0 4px 32px #00ffe755, 0 0 0 #7cf03d;
+    transform: scale(1.06) translateY(-2px);
+  }
+  .edit-post-btn i {
+    font-size: 1.18em;
+    transition: transform 0.28s;
+  }
+  .edit-post-btn:hover i, .edit-post-btn:focus i {
+    transform: scale(1.12) rotate(-7deg);
+  }
+  .cancel-btn {
+    background: #232a36;
+    color: #adb5bd;
+    font-weight: 700;
+    border: none;
+    box-shadow: 0 2px 12px #adb5bd33;
+  }
+  .cancel-btn:hover, .cancel-btn:focus {
+    background: #adb5bd;
+    color: #232a36;
+    box-shadow: 0 4px 24px #adb5bd55;
+    transform: scale(1.04) translateY(-1px);
+  }
+  .edit-error-list {
+    background: #ff4d4f22;
+    color: #ff4d4f;
+    border-radius: 1rem;
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.01rem;
+    list-style: disc inside;
+    box-shadow: 0 2px 12px #ff4d4f22;
+  }
+
+  /* MOBILE RESPONSIVENESS */
+  @media (max-width: 700px) {
+    .edit-blog-container {
+      max-width: 96vw;
+      padding: 1.4rem 4vw 1.1rem 4vw;
+      border-radius: 1.3rem;
+      margin: 2.4rem auto 1.3rem auto;
+    }
+    .edit-blog-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      letter-spacing: 1.19px;
+    }
+    .edit-post-btn, .cancel-btn {
+      font-size: 1rem;
+      min-width: 80px;
+      min-height: 38px;
+      border-radius: 1.1rem;
+      padding: 0.5rem 1rem;
+    }
+    .edit-blog-form label {
+      font-size: 0.99rem;
+    }
+    .edit-blog-form input[type="text"],
+    .edit-blog-form textarea,
+    .edit-blog-form select {
+      font-size: 0.99rem;
+      border-radius: 0.8rem;
+      padding: 0.55rem 0.6rem;
+    }
+    .edit-blog-form textarea { min-height: 92px;}
+    .edit-btn-row { gap: 0.7rem; margin-top: 0.2rem; }
+  }
+  @media (max-width: 400px) {
+    .edit-blog-container {
+      padding: 0.4rem 1vw 0.1rem 1vw;
+      border-radius: 0.65rem;
+    }
+    .edit-blog-form input[type="text"],
+    .edit-blog-form textarea,
+    .edit-blog-form select {
+      font-size: 0.93rem;
+      border-radius: 0.5rem;
+      padding: 0.31rem 0.36rem;
+    }
+    .edit-blog-form textarea { min-height: 47px;}
+    .edit-post-btn, .cancel-btn {
+      font-size: 0.93em;
+      border-radius: 0.72rem;
+      min-width: 60px;
+      min-height: 31px;
+      padding: 0.34rem 0.74rem;
+    }
+    .edit-blog-title { font-size: 0.93rem; letter-spacing: 0.5px;}
+  }
+</style>
+
+<div class="edit-blog-container">
+  <div class="edit-blog-title">
+    <i class="fas fa-edit"></i> Edit Blog Article
+  </div>
+  <form method="post" class="edit-blog-form">
+    {% csrf_token %}
+    {% if form.errors %}
+      <ul class="edit-error-list">
+        {% for field in form %}
+          {% for error in field.errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <label for="{{ form.title.id_for_label }}">Title</label>
+    {{ form.title }}
+    <label for="{{ form.category.id_for_label }}">Category</label>
+    {{ form.category }}
+    <label for="{{ form.content.id_for_label }}">Content</label>
+    {{ form.content }}
+    <div class="edit-btn-row">
+      <button type="submit" class="edit-post-btn"><i class="fas fa-save"></i> Save Changes</button>
+      <a href="{% url 'blog' %}" class="cancel-btn"><i class="fas fa-times"></i> Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
