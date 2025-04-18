@@ -100,6 +100,8 @@ CLOUDINARY_STORAGE = {
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_URL = 'cloudinary://API_KEY:API_SECRET@CLOUD_NAME'
+
 
 
 # Password validation
