@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'core',  # Custom app for core functionality
 ]
 
+INSTALLED_APPS += [
+    'cloudinary',
+    'cloudinary_storage',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
