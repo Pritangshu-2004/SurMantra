@@ -1,6 +1,17 @@
 from pathlib import Path
 import dj_database_url
 import os
+import environ
+import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+env = environ.Env(
+    DEBUG=(bool, False)
+)
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -11,9 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8+mqpg($^yu4mgu+p6m-3vd717ulr7-m#%(*n83&d&!-eubk#j'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ['*'] # Allow all subdomains of vercel.app
 
@@ -74,10 +82,19 @@ WSGI_APPLICATION = 'SurMantra.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
+        default=env('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True  # Render PostgreSQL requires SSL
+        ssl_require=True
     )
 }
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': env('CLOUDINARY_API_KEY'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET'),
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 
 # Password validation
